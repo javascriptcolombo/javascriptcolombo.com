@@ -35,6 +35,7 @@ module.exports = {
     'plugin:@brionmario/prettier',
     'plugin:@brionmario/next',
     'plugin:react/jsx-runtime',
+    '../../.eslintrc.js'
   ],
   parserOptions: {
     project: [path.resolve(__dirname, 'tsconfig.json')],

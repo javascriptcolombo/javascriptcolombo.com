@@ -41,7 +41,7 @@ const RegisterButton: ForwardRefExoticComponent<HeroProps & RefAttributes<HTMLDi
     ref={ref}
     {...rest}
   >
-    <div className="text-2xl font-medium">{children}</div>
+    <div className="text-2xl font-medium flex items-center">{children}</div>
     <div className="ml-auto rounded-full bg-background w-14 h-14 flex justify-center items-center">
       <svg
         className="text-primary"
