@@ -53,10 +53,10 @@ export default function Home(): ReactElement {
         <div className="overflow-x-hidden w-full">
           <main className="relative">
             <Hero />
+            <Footer />
           </main>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

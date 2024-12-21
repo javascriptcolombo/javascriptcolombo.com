@@ -31,11 +31,11 @@ import {AppRouterInstance} from 'next/dist/shared/lib/app-router-context.shared-
 import {cn} from '@/lib/utils';
 import {TestableComponent} from '@/types/dom';
 import NelumKuluna from '@/icons/NelumKuluna';
-import CoffeeBeans from '@/icons/CoffeeBeans';
 import RegisterButton from './RegisterButton';
 import FlipWords from './FlipWords';
 import Meetup from '@/icons/Meetup';
 import {goodBrush} from '@/app/fonts';
+import useMeetupConfig from '@/hooks/useMeetupConfig';
 
 export type HeroProps = HTMLAttributes<HTMLDivElement> & TestableComponent;
 
@@ -43,15 +43,11 @@ const Hero: ForwardRefExoticComponent<HeroProps & RefAttributes<HTMLDivElement>>
   HTMLDivElement,
   HeroProps
 >(({className, ...rest}: HeroProps, ref: ForwardedRef<HTMLDivElement>) => {
+  const {config} = useMeetupConfig();
   const router: AppRouterInstance = useRouter();
 
   const handleRegisterClick = (): void => {
-    const orgName: string | undefined = process.env.NEXT_PUBLIC_ASGARDEO_CLIENT_APP_ORG || '';
-    const clientId: string | undefined = process.env.NEXT_PUBLIC_ASGARDEO_CLIENT_APP_ID || '';
-    const appName: string | undefined = process.env.NEXT_PUBLIC_ASGARDEO_CLIENT_APP_NAME || '';
-
-    const url: string = `https://accounts.asgardeo.io/t/${orgName}/accountrecoveryendpoint/register.do?client_id=${clientId}&sp=${appName}`;
-    router.push(url);
+    router.push(config.links.meetup.url);
   };
 
   return (
@@ -66,51 +62,36 @@ const Hero: ForwardRefExoticComponent<HeroProps & RefAttributes<HTMLDivElement>>
           <h1
             className={`hero__title ${goodBrush.className} tracking-[-0.04em] leading-none text-[40px] md:text-5xl lg:text-[12em] max-w-lg md:max-w-xl lg:max-w-4xl text-center text-white`}
           >
-            JavaScript Colombo
+            {config.hero.title}
           </h1>
           <h3 className="flex gap-2 flex-wrap justify-center items-center font-space-grotesk leading-snug dark:text-[#FFFFFFB2] text-[#00000080] text-[20px] lg:text-xl max-w-md md:max-w-xl lg:max-w-[640px] text-center">
-            Let&apos;s meetup in Colombo, grab a <span className="underlined">coffee</span>
-            <CoffeeBeans height={28} width={28} /> and talk{' '}
-            <span>
-              <code className="font-mono">`</code>
-              <span className="font-bold">JavaScript</span>
-              <code className="font-mono">`</code>
-            </span>
+            {config.hero.tagline}
           </h3>
-          <div className="mt-8 text-left border border-1 px-8 py-6 rounded-md">
-            <h4 className="text-lg font-bold text-primary mb-2">🔔 Next session</h4>
-            <p className="text-md text-primary flex items-center gap-1">
-              <span className="flex items-center gap-1">
-                <CalendarDays /> Nov 6th 2024
-              </span>
-              ,{' '}
-              <span className="flex items-center gap-1">
-                <Clock />
-                6:00 PM Eastern
-              </span>{' '}
-              at{' '}
-              <span className="flex items-center gap-1">
-                <MapPin className="text-[red]" />
-                WSO2, Colombo 4, Sri Lanka
-              </span>
-            </p>
-          </div>
+          {config.hero.showNextMeetupSummary && (
+            <div className="mt-8 text-left border border-1 px-8 py-6 rounded-md">
+              <h4 className="text-lg font-bold text-primary mb-2">🔔 Next session</h4>
+              <p className="text-md text-primary flex items-center gap-1">
+                <span className="flex items-center gap-1">
+                  <CalendarDays /> {config.meetups.next.date}
+                </span>
+                ,{' '}
+                <span className="flex items-center gap-1">
+                  <Clock />
+                  {config.meetups.next.time}
+                </span>{' '}
+                at{' '}
+                <span className="flex items-center gap-1">
+                  <MapPin className="text-[red]" />
+                  {config.meetups.next.location}
+                </span>
+              </p>
+            </div>
+          )}
           <div className="flex items-center gap-10 mt-10">
             <RegisterButton className="w-60" onClick={handleRegisterClick}>
               <FlipWords words={['Register', 'RSVP ✨']} className="text-inverse font-bold" />
             </RegisterButton>
-            <div className="flex items-center gap-10">
-              <div className="h-12 w-px bg-gray-400" />
-              <span className="flex items-center">
-                check us out on{' '}
-                <span className="flex items-center underlined cursor-pointer group">
-                  <Meetup height={30} width={100} />
-                  <ExternalLink className="text-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </span>
-              </span>
-            </div>
           </div>
-
           <div className="nelum-kuluna-mask absolute right-[-125px] top-[50px]">
             <NelumKuluna />
           </div>

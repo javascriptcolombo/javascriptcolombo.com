@@ -27,39 +27,45 @@ import {cn} from '@/lib/utils';
 import {TestableComponent} from '@/types/dom';
 import {ExternalLink, GithubIcon, Heart} from 'lucide-react';
 import WSO2 from '@/icons/WSO2';
+import useMeetupConfig from '@/hooks/useMeetupConfig';
 
 export type FooterProps = HTMLAttributes<HTMLDivElement> & TestableComponent;
 
 const Footer: ForwardRefExoticComponent<FooterProps & RefAttributes<HTMLDivElement>> = forwardRef<
   HTMLDivElement,
   FooterProps
->(({className, ...rest}: FooterProps, ref: ForwardedRef<HTMLDivElement>) => (
-  <footer className={cn('footer', className)} ref={ref} {...rest}>
-    <div className="container mx-auto py-4">
-      <p className="text-center text-sm text-gray-600 dark:text-gray-400">
-        &copy; {new Date().getFullYear()} JavaScript Colombo. All rights reserved.
-      </p>
-      <div className="mt-4 text-center">
-        <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
-          <Heart width={16} height={16} stroke="#c96198" />
-          <span>Sponsored by</span>
-          <a href="https://wso2.com" className="text-blue-500 hover:underline">
-            <WSO2 height={20} width={40} />
-          </a>
+>(({className, ...rest}: FooterProps, ref: ForwardedRef<HTMLDivElement>) => {
+  const {config} = useMeetupConfig();
+
+  return (
+    <footer className={cn('footer', className)} ref={ref} {...rest}>
+      <div className="container mx-auto py-4">
+        <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+          &copy; {new Date().getFullYear()} JavaScript Colombo. All rights reserved.
         </p>
+        <div className="mt-4 text-center">
+          <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
+            <Heart width={16} height={16} stroke="#c96198" />
+            <span>Sponsored by</span>
+            <a href={config.sponsor.mainSponsor.website} className="text-blue-500 hover:underline" target="_blank">
+              {config.sponsor.mainSponsor.name}
+            </a>
+          </p>
+        </div>
+        <div className="mt-4 text-center">
+          <a
+            href={config.links.source.github.url}
+            target={config.links.source.github.target}
+            className="text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1 hover:underline"
+          >
+            <GithubIcon width={16} height={16} />
+            <span>Source Code</span>
+            <ExternalLink width={16} height={16} />
+          </a>
+        </div>
       </div>
-      <div className="mt-4 text-center">
-        <a
-          href="https://github.com/javascript-colombo/javascriptcolombo.com"
-          className="text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1 hover:underline"
-        >
-          <GithubIcon width={16} height={16} />
-          <span>Source Code</span>
-          <ExternalLink width={16} height={16} />
-        </a>
-      </div>
-    </div>
-  </footer>
-));
+    </footer>
+  );
+});
 
 export default Footer;

@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2024, Brion Mario.
+ * Copyright (c) 2024, JavaScript Colombo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,6 +36,7 @@ module.exports = {
     'plugin:@brionmario/jest',
     'plugin:@brionmario/prettier',
     'plugin:react/jsx-runtime',
+    '../../.eslintrc.js',
   ],
   parserOptions: {
     ecmaVersion: 2018,

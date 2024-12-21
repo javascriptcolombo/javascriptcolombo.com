@@ -25,9 +25,10 @@
 import type {Metadata} from 'next';
 import {ReactElement} from 'react';
 import ThemeProvider from '@/components/ThemeProvider';
-import './globals.scss';
-import './custom.scss';
 import {inter, spaceGrotesk} from './fonts';
+import useMeetupConfig from '@/hooks/useMeetupConfig';
+import './custom.scss';
+import './globals.scss';
 
 export const metadata: Metadata = {
   title: 'JavaScript Colombo',
@@ -39,14 +40,23 @@ const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>): ReactElement => (
-  <html lang="en">
-    <body className={`${spaceGrotesk.className} ${inter.className}`}>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-        {children}
-      </ThemeProvider>
-    </body>
-  </html>
-);
+}>): ReactElement => {
+  const {config} = useMeetupConfig();
+
+  return (
+    <html lang="en">
+      <body className={`${spaceGrotesk.className} ${inter.className}`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme={config.theme.defaultTheme}
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+};
 
 export default RootLayout;

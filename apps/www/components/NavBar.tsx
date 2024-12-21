@@ -34,6 +34,7 @@ import {useReducedMotion, AnimatePresence, motion, Transition} from 'framer-moti
 import {AppRouterInstance} from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import Logo from './Logo';
 import NavLink, {MobileNavLink} from './NavLink';
+import useMeetupConfig from '@/hooks/useMeetupConfig';
 
 /**
  * The `NavBarProps` interface represents the props accepted by the `NavBar` component.
@@ -58,6 +59,7 @@ export interface NavBarItem extends LinkProps {
 }
 
 const NavBar: FC<NavBarProps> = ({items}: NavBarProps): ReactElement => {
+  const {config} = useMeetupConfig();
   const pathname = usePathname();
   const shouldReduceMotion = useReducedMotion();
 
@@ -126,9 +128,11 @@ const NavBar: FC<NavBarProps> = ({items}: NavBarProps): ReactElement => {
             ))}
           </ul>
           <div className="flex items-center justify-center">
-            <div className="noscript-hidden lg:block">
-              <ThemeSwitch data-testid="header-theme-switcher" className="mr-4" />
-            </div>
+            {config.theme.showThemeSwitcher && (
+              <div className="noscript-hidden lg:block">
+                <ThemeSwitch data-testid="header-theme-switcher" className="mr-4" />
+              </div>
+            )}
             <div className="block lg:hidden">
               {/* Mobile menu button */}
               <button
