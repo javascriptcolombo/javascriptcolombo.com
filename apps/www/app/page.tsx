@@ -50,7 +50,7 @@ export default function Home(): ReactElement {
     <div dir="ltr">
       <NavBar items={[]} />
       <div className="mx-auto flex">
-        <div className="overflow-x-hidden w-full">
+        <div className="overflow-x-hidden w-full" style={{height: 'calc(100vh - 89px)'}}>
           <main className="relative">
             <Hero />
             <Footer />
