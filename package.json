@@ -24,8 +24,7 @@
     "lint": "turbo lint",
     "publish:packages": "changeset publish",
     "test": "turbo test",
-    "version:packages": "changeset version && pnpm install --lockfile-only",
-    "prepare": "husky"
+    "version:packages": "changeset version && pnpm install --lockfile-only"
   },
   "devDependencies": {
     "@brionmario/eslint-plugin": "^0.3.4",
@@ -38,7 +37,6 @@
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.57.0",
     "eslint-config-turbo": "^2.3.0",
-    "husky": "^9.0.11",
     "prettier": "^3.3.3",
     "turbo": "latest"
   },
